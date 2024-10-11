@@ -1,0 +1,17 @@
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENABLE_FLAC=${ENABLE_FLAC:-0}
+    volumes:
+      - type: bind
+        source: ./local_resources/
+        target: /tmp/local_resources/
+        read_only: true
+    restart: always
+    env_file:
+      - token.env
+    environment:
+      - COOKIES_PATH=/tmp/local_resources/cookies.txt
